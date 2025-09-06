@@ -1,0 +1,147 @@
+{
+  "users": [
+    {
+      "user_id": 1,
+      "username": "testuser",
+      "email": "test@example.com",
+      "created_at": "2025-09-06T00:00:00Z"
+    },
+    {
+      "user_id": 2,
+      "username": "r",
+      "email": "MAHARISHI459@gmail.com",
+      "created_at": "2025-09-06T18:26:27.716012Z"
+    },
+    {
+      "user_id": 3,
+      "username": "Rs",
+      "email": "MAHARISHI459@gmail.com",
+      "created_at": "2025-09-06T18:31:38.142414Z"
+    },
+    {
+      "user_id": 4,
+      "username": "f",
+      "email": "MAHARISHI459@gmail.com",
+      "created_at": "2025-09-06T18:42:45.625608Z"
+    },
+    {
+      "user_id": 5,
+      "username": "fg",
+      "email": "MAHARISHI459@gmail.com",
+      "created_at": "2025-09-06T18:43:58.406603Z"
+    },
+    {
+      "user_id": 6,
+      "username": "t",
+      "email": "MAHARISHI459@gmail.com",
+      "created_at": "2025-09-06T18:52:08.933817Z"
+    },
+    {
+      "user_id": 7,
+      "username": "ref",
+      "email": "MAHARISHI459@gmail.com",
+      "created_at": "2025-09-06T18:58:55.394582Z"
+    }
+  ],
+  "expenses": [
+    {
+      "expense_id": 1,
+      "user_id": 1,
+      "amount": 25.5,
+      "category": "Food",
+      "merchant": "McDonalds",
+      "transaction_date": "2025-09-01T12:30:00Z",
+      "source": "manual"
+    },
+    {
+      "expense_id": 2,
+      "user_id": 1,
+      "amount": 100.0,
+      "category": "Shopping",
+      "merchant": "Amazon",
+      "transaction_date": "2025-09-02T15:00:00Z",
+      "source": "manual"
+    },
+    {
+      "expense_id": 3,
+      "user_id": 2,
+      "amount": 15.75,
+      "category": "Transport",
+      "merchant": "Uber",
+      "transaction_date": "2025-09-03T09:45:00Z",
+      "source": "manual"
+    },
+    {
+      "expense_id": 4,
+      "user_id": 3,
+      "amount": 60.0,
+      "category": "Groceries",
+      "merchant": "Walmart",
+      "transaction_date": "2025-09-04T18:20:00Z",
+      "source": "manual"
+    },
+    {
+      "expense_id": 5,
+      "user_id": 2,
+      "amount": 45.0,
+      "category": "Entertainment",
+      "merchant": "Netflix",
+      "transaction_date": "2025-09-05T20:00:00Z",
+      "source": "manual"
+    },
+    {
+      "expense_id": 6,
+      "user_id": 3,
+      "amount": 120.0,
+      "category": "Shopping",
+      "merchant": "Flipkart",
+      "transaction_date": "2025-09-06T14:10:00Z",
+      "source": "manual"
+    },
+    {
+      "expense_id": 7,
+      "user_id": 4,
+      "amount": 80.0,
+      "category": "Food",
+      "merchant": "Dominos",
+      "transaction_date": "2025-09-07T13:00:00Z",
+      "source": "manual"
+    },
+    {
+      "expense_id": 8,
+      "user_id": 4,
+      "amount": 30.0,
+      "category": "Transport",
+      "merchant": "Ola",
+      "transaction_date": "2025-09-07T09:30:00Z",
+      "source": "manual"
+    },
+    {
+      "user_id": 1,
+      "amount": 1.0,
+      "category": "Shopping",
+      "merchant": "Amazon",
+      "transaction_date": "2025-09-06T19:07:16.799211Z",
+      "source": "manual",
+      "expense_id": 9
+    },
+    {
+      "user_id": 1,
+      "amount": 1.0,
+      "category": "Personal Care",
+      "merchant": "Amazon",
+      "transaction_date": "2025-09-06T19:16:02.052849Z",
+      "source": "manual",
+      "expense_id": 10
+    },
+    {
+      "user_id": 1,
+      "amount": 1.0,
+      "category": "Stationery",
+      "merchant": "Amazon",
+      "transaction_date": "2025-09-06T19:16:34.132046Z",
+      "source": "manual",
+      "expense_id": 11
+    }
+  ]
+}
