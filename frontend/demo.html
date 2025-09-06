@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards & Profile Demo</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(120deg, #1a1a2e, #16213e, #0f3460);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .demo-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 1200px) {
+            .demo-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .component-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .section-title {
+            color: #00d4ff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .demo-note {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🎁 IntelliSpend Rewards & Profile Demo</h1>
+            <div class="demo-note">
+                <p>✨ This is a standalone demo of the Rewards and Profile components</p>
+                <p>🚀 Both components work independently without backend requirements</p>
+            </div>
+        </div>
+        
+        <div class="demo-grid">
+            <div class="component-section">
+                <h2 class="section-title">🎁 Rewards System</h2>
+                <div id="rewards-demo"></div>
+            </div>
+            
+            <div class="component-section">
+                <h2 class="section-title">👤 Profile Management</h2>
+                <div id="profile-demo"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- React & Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Rewards Component CSS -->
+    <style>
+        /* Inline Rewards CSS */
+        .rewards-container { padding: 1rem; }
+        .rewards-header { text-align: center; margin-bottom: 2rem; }
+        .plant-container { display: flex; justify-content: center; margin: 2rem 0; }
+        .plant-display { font-size: 4rem; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+        .stat-card { background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; text-align: center; }
+        .achievements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .achievement-card { background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; }
+        .achievement-earned { background: rgba(0,255,0,0.1); border: 1px solid rgba(0,255,0,0.3); }
+        .rewards-store { margin-top: 2rem; }
+        .rewards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .reward-card { background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
+    </style>
+
+    <!-- Profile Component CSS -->
+    <style>
+        /* Inline Profile CSS */
+        .profile-container { padding: 1rem; }
+        .profile-header { text-align: center; margin-bottom: 2rem; }
+        .avatar { font-size: 3rem; margin-bottom: 1rem; }
+        .profile-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0; }
+        .goals-section { margin-top: 2rem; }
+        .goals-grid { display: grid; gap: 1rem; }
+        .goal-card { background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
+        .goal-progress { background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; margin: 0.5rem 0; }
+        .goal-progress-fill { background: linear-gradient(90deg, #00d4ff, #0099cc); height: 100%; border-radius: 4px; transition: width 0.3s; }
+        .priority-high { border-left: 4px solid #ff4444; }
+        .priority-medium { border-left: 4px solid #ffaa00; }
+        .priority-low { border-left: 4px solid #44ff44; }
+    </style>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Rewards Component
+        const RewardsDemo = () => {
+            const [userStats] = useState({
+                totalPoints: 2450,
+                level: 8,
+                streakDays: 15,
+                totalExpenses: 156,
+                goalsCompleted: 3,
+                badgesEarned: 12
+            });
+
+            const [achievements] = useState([
+                { id: 1, title: 'First Step', description: 'Added your first expense', icon: '🌱', earned: true, points: 50 },
+                { id: 2, title: 'Streak Master', description: '7 days straight logging', icon: '🔥', earned: true, points: 100 },
+                { id: 3, title: 'Goal Getter', description: 'Completed first goal', icon: '🎯', earned: true, points: 200 },
+                { id: 4, title: 'Budget Boss', description: 'Stayed under budget', icon: '👑', earned: false, points: 150, progress: 68 }
+            ]);
+
+            const getPlantStage = (level) => {
+                if (level >= 10) return '🌳';
+                if (level >= 8) return '🌿';
+                if (level >= 6) return '🌱';
+                if (level >= 4) return '🌿';
+                if (level >= 2) return '🌱';
+                return '🌰';
+            };
+
+            return (
+                <div className="rewards-container">
+                    <div className="rewards-header">
+                        <h3>Level {userStats.level} - {userStats.totalPoints} Points</h3>
+                    </div>
+
+                    <div className="plant-container">
+                        <div className="plant-display">{getPlantStage(userStats.level)}</div>
+                    </div>
+
+                    <div className="stats-grid">
+                        <div className="stat-card">
+                            <div>🔥 {userStats.streakDays}</div>
+                            <div>Day Streak</div>
+                        </div>
+                        <div className="stat-card">
+                            <div>📊 {userStats.totalExpenses}</div>
+                            <div>Expenses</div>
+                        </div>
+                        <div className="stat-card">
+                            <div>🏆 {userStats.goalsCompleted}</div>
+                            <div>Goals Done</div>
+                        </div>
+                    </div>
+
+                    <div className="achievements-section">
+                        <h4>🏆 Achievements</h4>
+                        <div className="achievements-grid">
+                            {achievements.map(achievement => (
+                                <div key={achievement.id} className={`achievement-card ${achievement.earned ? 'achievement-earned' : ''}`}>
+                                    <div>{achievement.icon} {achievement.title}</div>
+                                    <div style={{fontSize: '0.8rem', opacity: 0.8}}>{achievement.description}</div>
+                                    <div style={{fontSize: '0.7rem', color: '#00d4ff'}}>{achievement.points} points</div>
+                                    {!achievement.earned && achievement.progress && (
+                                        <div style={{marginTop: '0.5rem'}}>
+                                            <div style={{background: 'rgba(255,255,255,0.2)', height: '4px', borderRadius: '2px'}}>
+                                                <div style={{background: '#00d4ff', height: '100%', width: `${achievement.progress}%`, borderRadius: '2px'}}></div>
+                                            </div>
+                                            <div style={{fontSize: '0.7rem', textAlign: 'center'}}>{achievement.progress}%</div>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Profile Component
+        const ProfileDemo = () => {
+            const [userProfile] = useState({
+                name: 'John Doe',
+                email: 'john@example.com',
+                avatar: '👤',
+                totalExpenses: 15420,
+                monthlyBudget: 25000,
+                totalSavings: 45000,
+                level: 'Gold Member',
+                pointsEarned: 2450
+            });
+
+            const [goals] = useState([
+                { id: 1, title: 'Emergency Fund', targetAmount: 50000, currentAmount: 34000, priority: 'high', deadline: '2024-12-31' },
+                { id: 2, title: 'Vacation Fund', targetAmount: 30000, currentAmount: 18000, priority: 'medium', deadline: '2024-10-15' },
+                { id: 3, title: 'New Laptop', targetAmount: 80000, currentAmount: 25000, priority: 'low', deadline: '2024-11-30' }
+            ]);
+
+            return (
+                <div className="profile-container">
+                    <div className="profile-header">
+                        <div className="avatar">{userProfile.avatar}</div>
+                        <h3>{userProfile.name}</h3>
+                        <p>{userProfile.email}</p>
+                        <div style={{color: '#00d4ff', fontWeight: 'bold'}}>{userProfile.level}</div>
+                    </div>
+
+                    <div className="profile-stats">
+                        <div className="stat-card">
+                            <div>₹{userProfile.totalExpenses.toLocaleString()}</div>
+                            <div>Total Expenses</div>
+                        </div>
+                        <div className="stat-card">
+                            <div>₹{userProfile.totalSavings.toLocaleString()}</div>
+                            <div>Total Savings</div>
+                        </div>
+                    </div>
+
+                    <div className="goals-section">
+                        <h4>🎯 Financial Goals</h4>
+                        <div className="goals-grid">
+                            {goals.map(goal => {
+                                const progress = (goal.currentAmount / goal.targetAmount) * 100;
+                                return (
+                                    <div key={goal.id} className={`goal-card priority-${goal.priority}`}>
+                                        <div style={{fontWeight: 'bold'}}>{goal.title}</div>
+                                        <div style={{fontSize: '0.9rem', margin: '0.5rem 0'}}>
+                                            ₹{goal.currentAmount.toLocaleString()} / ₹{goal.targetAmount.toLocaleString()}
+                                        </div>
+                                        <div className="goal-progress">
+                                            <div className="goal-progress-fill" style={{width: `${progress}%`}}></div>
+                                        </div>
+                                        <div style={{fontSize: '0.8rem', opacity: 0.8}}>
+                                            {Math.round(progress)}% • Due: {goal.deadline}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Render components
+        ReactDOM.render(<RewardsDemo />, document.getElementById('rewards-demo'));
+        ReactDOM.render(<ProfileDemo />, document.getElementById('profile-demo'));
+    </script>
+</body>
+</html>
